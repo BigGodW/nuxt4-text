@@ -20,12 +20,12 @@
                 </template>
             </van-field>
             <div class="p-2 m-4">
-            <van-button block="" type="primary" @click="saveCarousel" native-type="submit">
-                保存轮播
-            </van-button>
-        </div>
+                <van-button block="" type="primary" @click="saveCarousel" native-type="submit">
+                    保存轮播
+                </van-button>
+            </div>
         </van-cell-group>
-        
+
     </div>
 </template>
 <script setup>
@@ -39,12 +39,15 @@ const newCarousel = ref({
 });
 const fileList = ref([])
 const route = useRoute()
-const {id}= route.query
-await useAsyncData('getCarouselId',async()=>{
-    const res = await useSupabase().from('carousel').select().eq('id',id)
-    newCarousel.value = res.data[0]
-    const fileUrl = useSupabaseImgUrl(newCarousel.value.image_url)
-    fileList.value.push({url:fileUrl})
+const { id } = route.query
+await useAsyncData('getCarouselId', async () => {
+    const res = await useSupabase().from('carousel').select().eq('id', id)
+    if (res.data) {
+        newCarousel.value = res.data[0]
+        const fileUrl = useSupabaseImgUrl(newCarousel.value.image_url)
+        fileList.value.push({ url: fileUrl })
+    }
+
 })
 // 文件处理
 const uploadFile = async (file) => {
@@ -59,18 +62,18 @@ const uploadFile = async (file) => {
     }
 }
 // 保存轮播
-const saveCarousel = async()=>{
-    if(newCarousel.value.title && newCarousel.value.image_url){
+const saveCarousel = async () => {
+    if (newCarousel.value.title && newCarousel.value.image_url) {
         console.log('提交信息')
-        const res = await useSupabase().from('carousel').update({...newCarousel.value}).eq('id',id)
+        const res = await useSupabase().from('carousel').update({ ...newCarousel.value }).eq('id', id)
         console.log(res)
-        if(!res.err){
+        if (!res.err) {
             // 提交成功
             showSuccessToast('添加成功');
             newCarousel.value = {}
             navigateTo('/admin/carousel/list')
         }
-    }else{
+    } else {
         showFailToast('失败文案')
     }
 }
