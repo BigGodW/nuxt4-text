@@ -17,7 +17,7 @@
         <th>编辑</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody v-if="carousels">
       <!-- row 1 -->
       <tr v-for="(carousel,index) in carousels">
         <th>{{ index+1}}</th>

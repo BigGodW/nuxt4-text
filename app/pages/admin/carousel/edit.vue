@@ -4,7 +4,7 @@
         <button class="btn btn-info btn-sm" @click="$router.back()">取消</button>
     </div>
     <div>
-        <van-cell-group inset>
+        <van-cell-group inset v-if="newCarousel">
             <van-field v-model="newCarousel.title" label="标题" placeholder="请输入标题" />
             <van-field v-model="newCarousel.link" label="跳转地址" placeholder="请输入用户名" />
             <van-field v-model="newCarousel.description" rows="2" autosize label="描述" type="textarea" maxlength="50"

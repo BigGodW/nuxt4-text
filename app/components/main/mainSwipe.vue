@@ -1,6 +1,6 @@
 <template>
     <div>
-        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" v-if="carousel">
             <van-swipe-item class=" relative" v-for="item in carousel">
                 <img class=" w-full aspect-16/6 object-cover" :src="useSupabaseImgUrl(item.image_url)" :alt="item.title">
                 <h1 class="text-center absolute bottom-0 left-0 right-0 font-semibold leading-5 bg-white/30 p-1">{{ item.title }}</h1>
