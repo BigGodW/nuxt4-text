@@ -40,14 +40,13 @@ const newCarousel = ref({
 const fileList = ref([])
 const route = useRoute()
 const { id } = route.query
-await useAsyncData('getCarouselId', async () => {
-    const res = await useSupabase().from('carousel').select().eq('id', id)
-    if (res.data) {
+useAsyncData('getCarouselId', async () => {
+    const data = await useSupabase().from('carousel').select().eq('id', id)
+    if (data.length>0) {
         newCarousel.value = res.data[0]
         const fileUrl = useSupabaseImgUrl(newCarousel.value.image_url)
         fileList.value.push({ url: fileUrl })
     }
-
 })
 // 文件处理
 const uploadFile = async (file) => {
