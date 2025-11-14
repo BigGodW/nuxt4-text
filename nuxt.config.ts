@@ -8,5 +8,10 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   css: ["./app/tailwind.css"],
-  modules:['@vant/nuxt']
+  modules:['@vant/nuxt', "@nuxtjs/supabase"],
+  supabase: {
+    url: process.env.SUPABASE_URL || '',
+    key: process.env.SUPABASE_KEY || '',
+    redirect:false
+  }
 })
