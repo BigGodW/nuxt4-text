@@ -31,7 +31,6 @@ export const compressImage = (
           width = (width * maxHeight) / height;
           height = maxHeight;
         }
-
         // 创建 canvas 进行压缩
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
@@ -43,10 +42,8 @@ export const compressImage = (
         }
         canvas.width = width;
         canvas.height = height;
-
         // 绘制缩放后的图像
         ctx.drawImage(img, 0, 0, width, height);
-
         // 转换为 Blob，然后转为 File
         canvas.toBlob(
           (blob) => {
@@ -68,7 +65,6 @@ export const compressImage = (
       };
       img.src = event.target?.result as string;
     };
-
     reader.readAsDataURL(file);
   });
 };

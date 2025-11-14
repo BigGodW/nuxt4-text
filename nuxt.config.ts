@@ -13,5 +13,10 @@ export default defineNuxtConfig({
     url: process.env.SUPABASE_URL || '',
     key: process.env.SUPABASE_KEY || '',
     redirect:false
+  },
+  runtimeConfig:{
+    public:{
+      imgBaseUrl:"https://nfcywblyimwziaqpopdf.supabase.co/storage/v1/object/public"
+    }
   }
 })

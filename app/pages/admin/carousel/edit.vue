@@ -1,5 +1,8 @@
 <template>
-    <h1>添加轮播图</h1>
+    <div class="flex justify-between items-center m-2">
+        <h1>轮播图编辑</h1>
+        <button class="btn btn-info btn-sm" @click="$router.back()">取消</button>
+    </div>
     <div>
         <van-cell-group inset>
             <van-field v-model="newCarousel.title" label="标题" placeholder="请输入标题" />
@@ -8,7 +11,7 @@
                 placeholder="请输入描述" show-word-limit />
             <van-field name="uploadImg" label="上传图片">
                 <template #input>
-                    <van-uploader v-model="fileList" :max-count="1"  :after-read="uploadFile" />
+                    <van-uploader v-model="fileList" :max-count="1" :after-read="uploadFile" />
                 </template>
             </van-field>
             <van-field name="switch" label="是否启用">
@@ -17,8 +20,8 @@
                 </template>
             </van-field>
             <div class="p-2 m-4">
-            <van-button block="" type="primary" @click="addCarousel" native-type="submit">
-                添加轮播
+            <van-button block="" type="primary" @click="saveCarousel" native-type="submit">
+                保存轮播
             </van-button>
         </div>
         </van-cell-group>
@@ -26,16 +29,17 @@
     </div>
 </template>
 <script setup>
-const newCarousel = ref({
-    title: '',
-    image_url: '',
-    link: '',
-    order: 0,
-    is_active: true,
-    description: ''
-});
+const newCarousel = ref({});
+const fileList = ref([])
+const route = useRoute()
+const {id}= route.query
+await useAsyncData('getCarouselId',async()=>{
+    const res = await useSupabase().from('carousel').select().eq('id',id)
+    newCarousel.value = res.data[0]
+    const fileUrl = useSupabaseImgUrl(newCarousel.value.image_url)
+    fileList.value.push({url:fileUrl})
+})
 // 文件处理
-const fileList = ref()
 const uploadFile = async (file) => {
     const fileitem = file.file
     // 压缩图片
@@ -47,12 +51,11 @@ const uploadFile = async (file) => {
         console.error('图片压缩上传失败')
     }
 }
-// 添加轮播
-const addCarousel = async()=>{
-
+// 保存轮播
+const saveCarousel = async()=>{
     if(newCarousel.value.title && newCarousel.value.image_url){
         console.log('提交信息')
-        const res = await useSupabase().from('carousel').insert({...newCarousel.value})
+        const res = await useSupabase().from('carousel').update({...newCarousel.value}).eq('id',id)
         console.log(res)
         if(!res.err){
             // 提交成功
@@ -61,7 +64,7 @@ const addCarousel = async()=>{
             navigateTo('/admin/carousel/list')
         }
     }else{
-        showFailToast('信息不完整')
+        showFailToast('失败文案')
     }
 }
 </script>

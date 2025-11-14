@@ -1,21 +1,16 @@
 <template>
     <div>
         <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-            <van-swipe-item>1</van-swipe-item>
-            <van-swipe-item>2</van-swipe-item>
-            <van-swipe-item>3</van-swipe-item>
-            <van-swipe-item>4</van-swipe-item>
+            <van-swipe-item class=" relative" v-for="item in carousel">
+                <img class=" w-full aspect-16/6 object-cover" :src="useSupabaseImgUrl(item.image_url)" :alt="item.title">
+                <h1 class="text-center absolute bottom-0 left-0 right-0 font-semibold leading-5 bg-white/30 p-1">{{ item.title }}</h1>
+            </van-swipe-item>
         </van-swipe>
     </div>
-
 </template>
-<style>
-.my-swipe .van-swipe-item {
-                color: #fff;
-                font-size: 20px;
-                line-height: 150px;
-                text-align: center;
-                background-color: #39a9ed;
-            }
-
-</style>
+<script setup>
+const {data:carousel}= await useAsyncData('getCarousel',async()=>{
+    const res = await useSupabase().from('carousel').select().eq('is_active',true)
+    return res.data
+})
+</script>
