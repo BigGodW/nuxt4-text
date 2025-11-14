@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div>
         <van-tabbar v-model="active" :placeholder="true" :z-index="1000">
         <van-tabbar-item v-for="item in menuList" :icon="item.icon" :name="item.name" :to="item.path">
             {{ item.name }}
