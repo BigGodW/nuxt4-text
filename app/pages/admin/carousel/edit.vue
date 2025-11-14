@@ -29,7 +29,14 @@
     </div>
 </template>
 <script setup>
-const newCarousel = ref({});
+const newCarousel = ref({
+    title: '',
+    image_url: '',
+    link: '',
+    order: 0,
+    is_active: true,
+    description: ''
+});
 const fileList = ref([])
 const route = useRoute()
 const {id}= route.query
