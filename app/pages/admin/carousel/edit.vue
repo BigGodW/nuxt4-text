@@ -1,4 +1,8 @@
+
 <template>
+    <h1>轮播图编辑</h1>
+</template>
+<!-- <template>
     <div class="flex justify-between items-center m-2">
         <h1>轮播图编辑</h1>
         <button class="btn btn-info btn-sm" @click="$router.back()">取消</button>
@@ -77,4 +81,4 @@ const saveCarousel = async () => {
         showFailToast('失败文案')
     }
 }
-</script>
+</script> -->
