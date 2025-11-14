@@ -8,5 +8,5 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   css: ["./app/tailwind.css"],
-  modules:['@nuxt/ui']
+  modules:['@vant/nuxt']
 })
