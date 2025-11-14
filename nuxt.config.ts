@@ -18,5 +18,8 @@ export default defineNuxtConfig({
     public:{
       imgBaseUrl:"https://nfcywblyimwziaqpopdf.supabase.co/storage/v1/object/public"
     }
+  },
+  routeRules:{
+    '/admin/**':{ssr:false}
   }
 })
