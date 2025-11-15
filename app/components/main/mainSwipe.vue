@@ -1,10 +1,7 @@
 <template>
     <div>
         <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-            <van-swipe-item>1</van-swipe-item>
-            <van-swipe-item>2</van-swipe-item>
-            <van-swipe-item>3</van-swipe-item>
-            <van-swipe-item>4</van-swipe-item>
+            <van-swipe-item v-for="item in mylist" :key="item.id">{{ item.title }}</van-swipe-item>
         </van-swipe>
     </div>
 
@@ -19,3 +16,12 @@
             }
 
 </style>
+<script setup>
+const myswipe = ref([])
+const {data:mylist} = await useAsyncData('getSwipeList',async()=>{
+    const res = await useSupabase().from('carousel').select('*')
+    return res.data
+})
+myswipe.value = mylist.value
+
+</script>
